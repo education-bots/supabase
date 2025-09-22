@@ -1,7 +1,8 @@
-supabase login
-supabase link --project-ref qotoihqktcxolhymvbup
-supabase migration new <filename>
-supabase db push
+supabase login  
+supabase link --project-ref qotoihqktcxolhymvbup  
+supabase migration new <filename>  
+supabase db push  
+npx supabase functions deploy  
 
 <!-- TypeScript -->
 <!-- Generate types -->

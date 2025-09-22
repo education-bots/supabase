@@ -1,0 +1,11 @@
+{
+  "imports": {
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.57.4",
+
+    "mdast-util-from-markdown": "https://esm.sh/mdast-util-from-markdown@2.0.0",
+    "mdast-util-to-markdown": "https://esm.sh/mdast-util-to-markdown@2.1.0",
+    "mdast-util-to-string": "https://esm.sh/mdast-util-to-string@4.0.0",
+    "unist-builder": "https://esm.sh/unist-builder@4.0.0",
+    "mdast": "https://esm.sh/v132/@types/mdast@4.0.0/index.d.ts"
+  }
+}
