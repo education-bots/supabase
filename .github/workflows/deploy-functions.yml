@@ -25,7 +25,7 @@ jobs:
           PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
 
       - name: Deploy Edge Function
-        run: supabase functions deploy process
+        run: supabase functions deploy process --debug --func-dir ./functions/process
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
