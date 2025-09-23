@@ -18,11 +18,14 @@ jobs:
         with:
           version: latest
 
+      - name: Link Supabase Project
+        run: supabase link --project-ref $PROJECT_REF
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+
       - name: Go back one directory
         run: cd ..
 
-      - name: Deploy Edge Function
-        run: supabase functions deploy --project-ref $PROJECT_REF
-        env:
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      - name: Deploy Edge Functions
+        run: supabase functions deploy
