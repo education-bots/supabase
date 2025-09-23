@@ -3,6 +3,7 @@ supabase link --project-ref qotoihqktcxolhymvbup
 supabase migration new <filename>  
 supabase db push  
 npx supabase functions deploy  
+supabase secrets set GEMINI_API_KEY=your_gemini_api_key  
 
 <!-- TypeScript -->
 <!-- Generate types -->

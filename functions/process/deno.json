@@ -2,6 +2,8 @@
   "imports": {
     "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.57.4",
 
+    "pdf2md-js": "https://esm.sh/pdf2md-js@1.0.8",
+
     "mdast-util-from-markdown": "https://esm.sh/mdast-util-from-markdown@2.0.0",
     "mdast-util-to-markdown": "https://esm.sh/mdast-util-to-markdown@2.1.0",
     "mdast-util-to-string": "https://esm.sh/mdast-util-to-string@4.0.0",

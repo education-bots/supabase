@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { processMarkdown } from '../_lib/markdown-parser.ts';
 import { Database } from '../_types/database.types.ts'
+import { pdfToMarkdown } from '../_lib/pdf-to-markdown.ts';
 
 // These are automatically injected
 const supabaseUrl = Deno.env.get('SUPABASE_URL');
@@ -73,9 +74,9 @@ Deno.serve(async (req) => {
     );
   }
 
-  const fileContents = await file.text();
-
-  const processedMd = processMarkdown(fileContents);
+  // const fileContents = await file.text();
+  const markdown = await pdfToMarkdown(file);
+  const processedMd = processMarkdown(markdown);
 
   const { error } = await supabase.from('book_chunks').insert(
     processedMd.sections.map(({ content }) => ({
