@@ -50,7 +50,7 @@ Deno.serve(async (req) => {
     .eq('id', book_id)
     .single();
 
-  if (!book?.storage_object_path) {
+  if (!book?.pdf_url) {
     return new Response(
       JSON.stringify({ error: 'Failed to find uploaded book' }),
       {
@@ -60,22 +60,8 @@ Deno.serve(async (req) => {
     );
   }
 
-  const { data: file } = await supabase.storage
-    .from('books_pdf')
-    .download(book.storage_object_id);
-
-  if (!file) {
-    return new Response(
-      JSON.stringify({ error: 'Failed to download storage object' }),
-      {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
-  }
-
   // const fileContents = await file.text();
-  const markdown = await pdfToMarkdown(file);
+  const markdown = await pdfToMarkdown(book.pdf_url);
   const processedMd = processMarkdown(markdown);
 
   const { error } = await supabase.from('book_chunks').insert(
