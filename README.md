@@ -8,7 +8,7 @@ supabase secrets set GEMINI_API_KEY=your_gemini_api_key
 <!-- TypeScript -->
 <!-- Generate types -->
 
-supabase gen types typescript --project-id qotoihqktcxolhymvbup > src/lib/database.types.ts
+supabase gen types typescript --project-id qotoihqktcxolhymvbup > types/database.types.ts
 
 <!-- Python -->
 
