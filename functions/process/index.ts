@@ -61,8 +61,8 @@ Deno.serve(async (req) => {
   }
 
   const { data: file } = await supabase.storage
-    .from('files')
-    .download(book.storage_object_path);
+    .from('books_pdf')
+    .download(book.storage_object_id);
 
   if (!file) {
     return new Response(
