@@ -14,6 +14,7 @@ export type Section = {
   heading?: string;
   part?: number;
   total?: number;
+  chunk_index: number;
 };
 
 export type ProcessedMd = {
@@ -63,9 +64,9 @@ export function processMarkdown(
     };
   }
 
-  const sectionTrees = splitTreeBy(mdTree, (node) => node.type === 'heading');
+  const sectionTrees: Array<any> = splitTreeBy(mdTree, (node) => node.type === 'heading');
 
-  const sections = sectionTrees.flatMap<Section>((tree) => {
+  const sections = sectionTrees.flatMap<Section>((tree, index) => {
     const [firstNode] = tree.children;
     const content = toMarkdown(tree);
 
@@ -87,12 +88,14 @@ export function processMarkdown(
         heading,
         part: i + 1,
         total: numberChunks,
+        chunk_index: index + 1,
       }));
     }
 
     return {
       content,
       heading,
+      chunk_index: index + 1,
     };
   });
 

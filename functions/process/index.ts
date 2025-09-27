@@ -65,9 +65,10 @@ Deno.serve(async (req) => {
   const processedMd = processMarkdown(markdown);
 
   const { error } = await supabase.from('book_chunks').insert(
-    processedMd.sections.map(({ content }) => ({
+    processedMd.sections.map(({ content, chunk_index }) => ({
       book_id,
       content,
+      chunk_index,
     }))
   );
 

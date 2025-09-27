@@ -47,11 +47,61 @@ CREATE TABLE public.messages (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   conversation_id uuid REFERENCES public.conversations(id) ON DELETE CASCADE,
   user_id uuid REFERENCES public.profiles(id) ON DELETE CASCADE,
-  role text NOT NULL CHECK (role IN ('user','agent','system')),
+  role text NOT NULL CHECK (role IN ('user','assistant','system')),
   message_text text,
   message_audio_url text,
   metadata jsonb DEFAULT '{}'::jsonb,
   created_at timestamptz DEFAULT now()
+);
+
+--------------------------------------------------------------------------------
+-- 7) CONVERSATION POLICIES
+--------------------------------------------------------------------------------
+
+-- ENABLE RLS
+ALTER TABLE public.conversations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.messages ENABLE ROW LEVEL SECURITY;
+
+-- CONVERSATIONS
+CREATE POLICY "Users can insert conversations"
+ON public.conversations FOR INSERT WITH CHECK (
+  auth.uid() = user_id
+);
+
+CREATE POLICY "Users can select their own conversations"
+ON public.conversations FOR SELECT USING (
+  auth.uid() = user_id
+);
+
+CREATE POLICY "Users can update their own conversations"
+ON public.conversations FOR UPDATE USING (
+  auth.uid() = user_id
+);
+
+CREATE POLICY "Users can delete their own conversations"
+ON public.conversations FOR DELETE USING (
+  auth.uid() = user_id
+);
+
+-- MESSAGES
+CREATE POLICY "Users can insert messages"
+ON public.messages FOR INSERT WITH CHECK (
+  auth.uid() = user_id
+);
+
+CREATE POLICY "Users can select messages from their own conversations"
+ON public.messages FOR SELECT USING (
+  auth.uid() = user_id AND conversation_id IN (SELECT id FROM public.conversations WHERE user_id = auth.uid())
+);
+
+CREATE POLICY "Users can update messages from their own conversations"
+ON public.messages FOR UPDATE USING (
+  auth.uid() = user_id AND conversation_id IN (SELECT id FROM public.conversations WHERE user_id = auth.uid())
+);
+
+CREATE POLICY "Users can delete messages from their own conversations"
+ON public.messages FOR DELETE USING (
+  auth.uid() = user_id AND conversation_id IN (SELECT id FROM public.conversations WHERE user_id = auth.uid())
 );
 
 --------------------------------------------------------------------------------

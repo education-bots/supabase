@@ -12,7 +12,7 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";  -- provides gen_random_uuid()
 CREATE TABLE IF NOT EXISTS public.profiles (
   id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE, -- link to Supabase auth user
   full_name text,
-  role text NOT NULL DEFAULT 'student' CHECK (role IN ('student','parent','teacher','admin')),
+  role text NOT NULL DEFAULT 'student' CHECK (role IN ('student','teacher','admin')),
   language_preference text DEFAULT 'ur',
   metadata jsonb DEFAULT '{}'::jsonb,
   created_at timestamptz DEFAULT now()
@@ -118,8 +118,7 @@ CREATE TABLE IF NOT EXISTS public.conversations (
   user_id uuid REFERENCES public.profiles(id) ON DELETE CASCADE, -- the student
   agent_id uuid REFERENCES public.agents(id),
   started_at timestamptz DEFAULT now(),
-  ended_at timestamptz,
-  status text DEFAULT 'active' CHECK (status IN ('active','ended'))
+  ended_at timestamptz
 );
 
 CREATE INDEX IF NOT EXISTS idx_conversations_user ON public.conversations (user_id);
