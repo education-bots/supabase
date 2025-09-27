@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS public.book_lessons (
 );
 
 -- ENABLE RLS
-ALTER TABLE public.books ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.book_lessons ENABLE ROW LEVEL SECURITY;
 
 -- POLICIES
 CREATE POLICY "Users can insert book lessons"

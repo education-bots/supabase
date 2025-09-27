@@ -81,5 +81,10 @@ CREATE TRIGGER update_quizzes_updated_at
   EXECUTE FUNCTION public.update_updated_at_column();
 
 --------------------------------------------------------------------------------
+-- DROP PARENTS TABLE
+--------------------------------------------------------------------------------
+DROP TABLE IF EXISTS public.parent_children CASCADE;
+
+--------------------------------------------------------------------------------
 -- END OF QUIZZES MIGRATION
 --------------------------------------------------------------------------------
